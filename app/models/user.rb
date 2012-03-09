@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  attr_accessible :name, :company_id, :email, :role
+  attr_accessible :id, :name, :company_id, :email, :role
   
   belongs_to :company
   # Include default devise modules. Others available are:

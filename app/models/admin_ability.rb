@@ -17,10 +17,10 @@ class AdminAbility
     # A superuser can to the following:
     if user.role?('superuser')
       can :manage, Company
+      can :manage, User
     end
     
     can :manage, Company, :id => user.company_id
-    # can :manage, Company, :id => user.company_id
     
   end
 end
