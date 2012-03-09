@@ -29,9 +29,8 @@ group :test do
   gem 'rspec'
   gem 'rspec-rails'
   gem 'spork'
-  gem 'rb-fsevent'
-  gem 'rb-inotify'
-  gem 'libnotify'
+  gem 'rb-inotify' if RUBY_PLATFORM.downcase.include?("linux")
+  gem 'rb-fsevent' if RUBY_PLATFORM.downcase.include?("darwin")
   gem 'guard'
   gem 'guard-rspec'
   gem 'guard-spork'
