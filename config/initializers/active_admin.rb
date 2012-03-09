@@ -34,7 +34,7 @@ ActiveAdmin.setup do |config|
   #   config.default_namespace = false
   #
   # Default:
-  # config.default_namespace = :admin
+  config.default_namespace = :admin
   #
   # You can customize the settings for each namespace by using
   # a namespace block. For example, to change the site title
@@ -111,6 +111,8 @@ ActiveAdmin.setup do |config|
   #
   # config.before_filter :do_something_awesome
 
+  # CanCan Integration
+  config.before_filter :check_admin_role
 
   # == Register Stylesheets & Javascripts
   #
@@ -126,4 +128,18 @@ ActiveAdmin.setup do |config|
   #
   # To load a javascript file:
   #   config.register_javascript 'my_javascript.js'
+end
+
+ActiveAdmin::ResourceController.class_eval do
+  protected
+
+  def current_ability
+    @current_ability ||= AdminAbility.new(current_user)
+  end
+  
+  def check_admin_role
+    return if current_user.role?(:superuser)
+    #flash[:notice] = "You need to be a superuser to access this part of the application"
+    #redirect_to root_path
+  end
 end

@@ -1,5 +1,14 @@
 ActiveAdmin.register Company do
+  # cancan fail
+  #controller.authorize_resource
   
+  # This will authorize the Company class with CanCan
+  # The authorization is done using the AdminAbility class
+  controller do
+    load_and_authorize_resource
+    skip_load_resource :only => :index
+  end
+      
   config.sort_order = 'name_asc'
   
   index do

@@ -9,6 +9,7 @@ gem 'sqlite3'
 gem 'activeadmin'
 gem 'meta_search', '>= 1.1.0.pre'
 gem 'devise', '~>2.0.0'
+gem 'cancan'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -23,6 +24,18 @@ group :assets do
 end
 
 gem 'jquery-rails'
+
+group :test do
+  gem 'rspec'
+  gem 'rspec-rails'
+  gem 'spork'
+  gem 'rb-fsevent'
+  gem 'rb-inotify'
+  gem 'libnotify'
+  gem 'guard'
+  gem 'guard-rspec'
+  gem 'guard-spork'
+end
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

@@ -1,4 +1,11 @@
 ActiveAdmin.register User do
+  # This will authorize the User class with CanCan
+  # The authorization is done using the AdminAbility class
+  controller.authorize_resource
+  
+  # The order of the ROLES array is important!
+  # All privileges are inherited from left to right
+  ROLES = %w(user superuser)
   
   filter :email
   filter :company
@@ -9,6 +16,7 @@ ActiveAdmin.register User do
     column :email
     column :company
     column :superadmin, :label => 'Identity Administrator'
+    column :role
     default_actions
   end
 
