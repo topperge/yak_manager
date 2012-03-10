@@ -1,9 +1,10 @@
 ActiveAdmin.register Company do
-  # cancan fail
-  #controller.authorize_resource
-  
   # This will authorize the Company class with CanCan
   # The authorization is done using the AdminAbility class
+  # BLACK MAGIC BELOW
+  # if you simply do controller.authorize_resource
+  # CanCan will fail insecurely with complex auth rules
+  # for example, everyone will be able to edit all Companies
   controller do
     load_and_authorize_resource
     skip_load_resource :only => :index

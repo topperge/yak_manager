@@ -1,3 +1,12 @@
 == Yak Manager
 
 This is an example app showing how to integrate CanCan authorization with ActiveAdmin.  See the spec directory for tests and an example.
+
+The really tricky part of this app was the ActiveAdmin block for load_and_authorize_resource instead of controller.authorize_resource in app/admin/companies.
+
+In this example app, the authorization (AuthZ) rules are like this:
+ - Users are allowed to manage (CRUD) Companies they belong to (user.company_id FK and association).
+ - Superadmins can edit all companies.
+ - Other people can only read (view) companies in ActiveAdmin.
+
+Use DB seeds (rake db:seed) to test ActiveAdmin outside of rspec tests.
