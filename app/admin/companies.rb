@@ -16,7 +16,7 @@ ActiveAdmin.register Company do
     column("Name") {|company| link_to "#{company.name}", admin_company_path(company) }
     column :description, :sortable => false
     column("Users") {|company| link_to "#{company.user.count}", admin_company_path(company) }
-    default_actions
+    default_actions :if => proc{ controller.current_ability.can?(:manage, Company, id=>user.company_id ) }
   end
   
   show :title => :name do    
