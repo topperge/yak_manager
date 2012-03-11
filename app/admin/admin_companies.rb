@@ -1,4 +1,6 @@
 ActiveAdmin.register Company do
+  scope_to :current_user, :association_method => :get_self_companies
+  
   # This will authorize the Company class with CanCan
   # The authorization is done using the AdminAbility class
   # BLACK MAGIC BELOW
@@ -10,7 +12,7 @@ ActiveAdmin.register Company do
     skip_load_resource :only => :index
   end
   
-  config.sort_order = 'name_asc'
+  #config.sort_order = 'name_asc'
   
   index do
     column("Name") {|company| link_to "#{company.name}", admin_company_path(company) }

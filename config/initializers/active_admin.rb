@@ -112,7 +112,7 @@ ActiveAdmin.setup do |config|
   # config.before_filter :do_something_awesome
 
   # CanCan Integration
-  config.before_filter :check_admin_role
+  #config.before_filter :check_admin_role
 
   # == Register Stylesheets & Javascripts
   #

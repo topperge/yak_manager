@@ -1,6 +1,8 @@
 class User < ActiveRecord::Base
   attr_accessible :id, :name, :company_id, :email, :role
   
+  # scope :get_self_companies, Company.where(:id => self.company_id)
+  
   belongs_to :company
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
@@ -33,4 +35,12 @@ class User < ActiveRecord::Base
   #     self.company_id=nil
   #   end
   # end
+  
+  def get_self_companies
+    if self.role == 'superuser'
+      Company.select([:id, :name, :description])
+    else
+      Company.where(:id => self.company_id)
+    end
+  end
 end
