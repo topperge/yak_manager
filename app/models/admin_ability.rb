@@ -14,11 +14,13 @@ class AdminAbility
     # A user can manage users in their company
     can :read, Company
     can :read, User
-
+    can :read, ContractorFile
+    
     # A superuser can to the following:
     if user.role?('superuser')
       can :manage, Company
       can :manage, User
+      can :manage, ContractorFile
     end
     
     can :manage, Company, :id => user.company_id

@@ -2,6 +2,7 @@ class User < ActiveRecord::Base
   attr_accessible :id, :name, :company_id, :email, :role
   
   belongs_to :company
+  has_many   :contractor_files
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :recoverable, :rememberable, :trackable, :validatable

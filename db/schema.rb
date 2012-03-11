@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120302203704) do
+ActiveRecord::Schema.define(:version => 20120311043323) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -33,6 +33,31 @@ ActiveRecord::Schema.define(:version => 20120302203704) do
     t.text     "description"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+  end
+
+  create_table "contractor_files", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "company_id"
+    t.string   "status"
+    t.integer  "users_created"
+    t.integer  "users_updated"
+    t.integer  "users_deleted"
+    t.integer  "users_errored"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+    t.string   "csv_file_name"
+    t.string   "csv_content_type"
+    t.integer  "csv_file_size"
+    t.datetime "csv_updated_at"
+  end
+
+  create_table "contractors", :force => true do |t|
+    t.string   "clid"
+    t.string   "email"
+    t.boolean  "deleted"
+    t.integer  "company_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "users", :force => true do |t|

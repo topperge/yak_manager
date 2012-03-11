@@ -5,6 +5,8 @@ ActiveAdmin.register Company do
   # if you simply do controller.authorize_resource
   # CanCan will fail insecurely with complex auth rules
   # for example, everyone will be able to edit all Companies
+  #scope_to :current_user, :associated_method => :company
+ 
   controller do
     load_and_authorize_resource
     skip_load_resource :only => :index

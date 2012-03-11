@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  user_id: 1
+  company_id: 1
+  status: MyString
+  users_created: 1
+  users_updated: 1
+  users_deleted: 1
+  users_errored: 1
+
+two:
+  user_id: 1
+  company_id: 1
+  status: MyString
+  users_created: 1
+  users_updated: 1
+  users_deleted: 1
+  users_errored: 1
