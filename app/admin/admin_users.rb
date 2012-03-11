@@ -1,4 +1,6 @@
 ActiveAdmin.register User do
+  #menu :if => proc{ can?(:manage, User) }
+  
   # This will authorize the User class with CanCan
   # The authorization is done using the AdminAbility class
   controller.authorize_resource

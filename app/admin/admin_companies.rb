@@ -9,14 +9,14 @@ ActiveAdmin.register Company do
     load_and_authorize_resource
     skip_load_resource :only => :index
   end
-      
+  
   config.sort_order = 'name_asc'
   
   index do
     column("Name") {|company| link_to "#{company.name}", admin_company_path(company) }
     column :description, :sortable => false
     column("Users") {|company| link_to "#{company.user.count}", admin_company_path(company) }
-    default_actions :if => proc{ controller.current_ability.can?(:manage, Company, id=>user.company_id ) }
+    default_actions :if => proc{ can?(:manage, Company) }
   end
   
   show :title => :name do    

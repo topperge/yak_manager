@@ -13,6 +13,7 @@ class AdminAbility
 
     # A user can manage users in their company
     can :read, Company
+    can :read, User
 
     # A superuser can to the following:
     if user.role?('superuser')
