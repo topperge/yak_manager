@@ -24,18 +24,33 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me, :company_id, :role
 
   validates_presence_of :email
-  # validates_presence_of :company_id, :if => "superadmin.nil?"
-  # validate :remove_company_if_superadmin?
-  # 
-  # def is_not_superadmin?
-  #   superadmin.nil?
-  # end
-  # 
-  # def remove_company_if_superadmin?
-  #   if (superadmin == true)
-  #     self.company_id=nil
-  #   end
-  # end
+  validates_presence_of :company_id, :if => "superadmin.nil?"
+  validate :remove_company_if_superadmin?
+   
+  def is_not_superadmin?
+    superadmin.nil?
+  end
+   
+  def remove_company_if_superadmin?
+    # Check if the user has selected both a company and made the user an Identity Administrator.  
+    # This is not a valid use case. Remove company and confirm 
+    if (superadmin == true && !company_id.nil?)
+      self.company_id = nil
+      self.role = 'superuser'
+      errors.add(:company_id, "If the user is an Identity Administrator then they cannot be a member of a company.  Please resubmit if correct.")
+    # This should evaluate if they confirm the user is an Identity Administrator and have not selected a Company
+    elsif (superadmin == true)
+      self.company_id = nil
+      self.role = 'superuser'
+    # If the user hasn't selected anything we force them to select something.
+    elsif (superadmin == false && company_id.nil?)
+      self.role = 'user'
+      errors.add(:company_id, "You must select either a Company or an Identity Administrator Role for the User")
+    # If they aren't an Identity Administrator then we make sure they only have the user role
+    else
+      self.role = 'user'
+    end
+  end
   
   def get_self_companies
     if self.role == 'superuser'

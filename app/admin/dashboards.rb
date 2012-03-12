@@ -18,11 +18,14 @@ ActiveAdmin::Dashboards.build do
   # The block is rendered within the context of the view, so you can
   # easily render a partial rather than build content in ruby.
   #
-  #   section "Recent Posts" do
-  #     div do
+     section "Recent Files" do
+       ul do
+          ContractorFile.limit(10).collect do |cf|
+            li link_to "#{cf.csv_file_name}", cf.csv.url(:original, false)
+          end         
   #       render 'recent_posts' # => this will render /app/views/admin/dashboard/_recent_posts.html.erb
-  #     end
-  #   end
+       end
+     end
   
   # == Section Ordering
   # The dashboard sections are ordered by a given priority from top left to
