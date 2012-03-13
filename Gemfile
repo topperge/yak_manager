@@ -22,6 +22,10 @@ end
 
 gem 'jquery-rails'
 
+group :development do
+  gem 'ffaker'
+end
+
 group :test do
   gem 'rspec'
   gem 'rspec-rails'

@@ -3,4 +3,5 @@ class Company < ActiveRecord::Base
   has_many :user
   has_many :contractor_files
   validates_presence_of :name
+  validates_uniqueness_of :name, :case_sensitive => false
 end

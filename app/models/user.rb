@@ -1,7 +1,5 @@
 class User < ActiveRecord::Base
-  attr_accessible :id, :name, :company_id, :email, :role
-  
-  # scope :get_self_companies, Company.where(:id => self.company_id)
+  attr_accessible :id, :email, :password, :password_confirmation, :company_id, :role, :superadmin
   
   belongs_to :company
   has_many   :contractor_files
@@ -18,10 +16,6 @@ class User < ActiveRecord::Base
     return false unless role # A user have a role attribute. If not set, the user does not have any roles.
     ROLES.index(base_role.to_s) <= ROLES.index(role)
   end
-
-  # Setup accessible (or protected) attributes for your model
-  # attr_accessible :email, :password, :password_confirmation, :remember_me, :superadmin, :company_id, :role
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :company_id, :role
 
   validates_presence_of :email
   validates_presence_of :company_id, :if => "superadmin.nil?"
@@ -59,4 +53,13 @@ class User < ActiveRecord::Base
       Company.where(:id => self.company_id)
     end
   end
+  
+  def get_self_contractor_files
+    if self.role == 'superuser'
+      ContractorFile.select([:id, :user_id, :company_id, :status, :csv_file_name, :csv_file_size, :created_at])
+    else
+      ContractorFile.where(:company_id => self.company_id)
+    end
+  end
+  
 end

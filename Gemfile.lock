@@ -68,6 +68,7 @@ GEM
     execjs (1.3.0)
       multi_json (~> 1.0)
     fastercsv (1.5.4)
+    ffaker (1.13.0)
     ffi (1.0.11)
     formtastic (2.1.1)
       actionpack (~> 3.0)
@@ -187,6 +188,7 @@ DEPENDENCIES
   coffee-rails (~> 3.2.1)
   delayed_job_active_record
   devise (~> 2.0.0)
+  ffaker
   guard
   guard-rspec
   guard-spork
