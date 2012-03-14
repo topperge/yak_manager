@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  clid: MyString
+  email: MyString
+  flag: MyString
+  message: MyString
+  contractor_file_id: 1
+  company_id: 1
+
+two:
+  clid: MyString
+  email: MyString
+  flag: MyString
+  message: MyString
+  contractor_file_id: 1
+  company_id: 1

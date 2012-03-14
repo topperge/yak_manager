@@ -48,7 +48,8 @@ class User < ActiveRecord::Base
   
   def get_self_companies
     if self.role == 'superuser'
-      Company.select([:id, :name, :description])
+      #Company.select([:id, :name, :description])
+      Company.where("id > ?", 0)
     else
       Company.where(:id => self.company_id)
     end
@@ -56,7 +57,8 @@ class User < ActiveRecord::Base
   
   def get_self_contractor_files
     if self.role == 'superuser'
-      ContractorFile.select([:id, :user_id, :company_id, :status, :csv_file_name, :csv_file_size, :created_at])
+      #ContractorFile.select([:id, :user_id, :company_id, :status, :csv_file_name, :csv_file_size, :created_at])
+      ContractorFile.where("id > ?", 0)
     else
       ContractorFile.where(:company_id => self.company_id)
     end

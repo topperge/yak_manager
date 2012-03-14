@@ -26,6 +26,7 @@ ActiveAdmin.register ContractorFile do
     column :status
     column :created_at
     column :csv_file_size
+    column("Records Uploaded") {|contractorfile| "#{contractorfile.contractor_file_records.count}" }
     default_actions
   end
 

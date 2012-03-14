@@ -24,6 +24,7 @@ gem 'jquery-rails'
 
 group :development do
   gem 'ffaker'
+  gem 'ruby-prof'
 end
 
 group :test do

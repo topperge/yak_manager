@@ -4,7 +4,7 @@ require "faker"
 
 require "csv"
 
-line_count = ARGV.empty? ? 1400 : ARGV.first.to_i
+line_count = ARGV.empty? ? 15 : ARGV.first.to_i
 
 CSV( STDOUT ) do |csv|
   (1..line_count).each do |i|

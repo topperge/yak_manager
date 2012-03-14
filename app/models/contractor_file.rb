@@ -1,6 +1,7 @@
 class ContractorFile < ActiveRecord::Base
   belongs_to :user
   belongs_to :company
+  has_many   :contractor_file_records, :dependent => :destroy
   has_attached_file :csv
   validates_attachment_presence :csv
   validates_attachment_content_type :csv, :content_type => ['text/csv','text/comma-separated-values','text/csv','application/csv','text/plain']
