@@ -8,8 +8,8 @@ ActiveAdmin.register ContractorFileRecord do
   
   filter :clid
   filter :email
-  filter :flag, :as => :select, :collection => ContractorFile.all
-  filter :csv_file_name
+  filter :flag, :as => :select, :collection => ContractorFileRecord.group(:flag).map(&:flag)
+  filter :contractor_file, :as => :select, :collection => ContractorFile.group(:csv_file_name).map(&:csv_file_name)
   filter :created_at
   filter :updated_at
   

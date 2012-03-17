@@ -1,6 +1,13 @@
 ActiveAdmin.register ContractorFile do
   scope_to :current_user, :association_method => :get_self_contractor_files
 
+  filter :csv_file_name
+  filter :user, :as => :select, :collection => User.where(:company_id => 4).map(&:email)
+  #filter :user
+  filter :status
+  filter :company
+  filter :created_at
+
   controller do
     load_and_authorize_resource
     skip_load_resource :only => :index
