@@ -19,7 +19,7 @@ class User < ActiveRecord::Base
 
   validates_presence_of :email
   validates_presence_of :company_id, :if => "superadmin.nil?"
-  validate :remove_company_if_superadmin?
+  before_save :remove_company_if_superadmin?
    
   def is_not_superadmin?
     superadmin.nil?
@@ -48,7 +48,6 @@ class User < ActiveRecord::Base
   
   def get_self_companies
     if self.role == 'superuser'
-      #Company.select([:id, :name, :description])
       Company.where("id > ?", 0)
     else
       Company.where(:id => self.company_id)
@@ -57,10 +56,25 @@ class User < ActiveRecord::Base
   
   def get_self_contractor_files
     if self.role == 'superuser'
-      #ContractorFile.select([:id, :user_id, :company_id, :status, :csv_file_name, :csv_file_size, :created_at])
       ContractorFile.where("id > ?", 0)
     else
       ContractorFile.where(:company_id => self.company_id)
+    end
+  end
+
+  def get_self_contractor_file_records
+    if self.role == 'superuser'
+      ContractorFileRecord.where("id > ?", 0)
+    else
+      ContractorFileRecord.where(:company_id => self.company_id)
+    end
+  end
+  
+  def get_self_users
+    if self.role == 'superuser'
+      User.where("id > ?", 0)
+    else
+      User.where(:company_id => self.company_id)
     end
   end
   

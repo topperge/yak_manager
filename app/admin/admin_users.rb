@@ -1,9 +1,16 @@
 ActiveAdmin.register User do
   #menu :if => proc{ can?(:manage, User) }
   
+  scope_to :current_user, :association_method => :get_self_users
+  
   # This will authorize the User class with CanCan
   # The authorization is done using the AdminAbility class
-  controller.authorize_resource
+  #controller.authorize_resource
+  
+  controller do
+    load_and_authorize_resource
+    skip_load_resource :only => :index
+  end
   
   # The order of the ROLES array is important!
   # All privileges are inherited from left to right

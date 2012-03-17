@@ -7,14 +7,17 @@ ActiveAdmin.register Company do
   # if you simply do controller.authorize_resource
   # CanCan will fail insecurely with complex auth rules
   # for example, everyone will be able to edit all Companies
-  #scope_to :current_user, :associated_method => :company
  
   controller do
     load_and_authorize_resource
     skip_load_resource :only => :index
   end
   
-  #config.sort_order = 'name_asc'
+  config.sort_order = 'name_asc'
+  
+  filter :name
+  filter :created_at
+  filter :updated_at
   
   index do
     column("Name") {|company| link_to "#{company.name}", admin_company_path(company) }
