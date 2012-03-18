@@ -3,3 +3,30 @@
 @import "active_admin/base";
 // To customize the Active Admin interfaces, add your
 // styles here:
+.firstStatus {
+  margin: auto;
+  background: #FFC861;
+  color: black;
+  text-align: center;
+  width: 120px;
+  padding: 2px 2px 2px 2px;
+ }
+.secondStatus {
+  margin: auto;
+  background: #A5C77F;
+  color: black;
+  text-align: center;
+  width: 120px;
+  padding: 2px 2px 2px 2px;
+ }
+.thirdStatus {
+  margin: auto;
+  background: #42826C;
+  color: white;
+  text-align: center;
+  width: 120px;
+  padding: 2px 2px 2px 2px;
+ }
+.leftAlign {
+  margin: 0;
+}

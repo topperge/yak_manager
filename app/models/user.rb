@@ -78,4 +78,12 @@ class User < ActiveRecord::Base
     end
   end
   
+  def get_self_contractors
+    if self.role == 'superuser'
+      Contractor.where("id > ?", 0)
+    else
+      Contractor.where(:company_id => self.company_id)
+    end
+  end
+  
 end

@@ -7,6 +7,10 @@ class ApplicationController < ActionController::Base
 
   # Override build_footer method in ActiveAdmin::Views::Pages
   require 'active_admin_views_pages_base.rb'
+  
+  def set_current_user
+    Tread.current[:user] = current_user if current_user
+  end
 
   def authenticate_active_admin_user!
     authenticate_user!

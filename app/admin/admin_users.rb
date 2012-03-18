@@ -1,6 +1,8 @@
 ActiveAdmin.register User do
   #menu :if => proc{ can?(:manage, User) }
   
+  menu :parent => "Administration", :priority => 4, :if => proc { current_user.superadmin? }
+  
   scope_to :current_user, :association_method => :get_self_users
   
   # This will authorize the User class with CanCan
@@ -25,7 +27,6 @@ ActiveAdmin.register User do
     column :email
     column :company
     column :superadmin, :label => 'Identity Administrator'
-    column :role
     default_actions
   end
 

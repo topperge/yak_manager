@@ -1,6 +1,8 @@
 ActiveAdmin.register Company do
   scope_to :current_user, :association_method => :get_self_companies
   
+  menu :parent => "Administration", :priority => 3, :if => proc { current_user.superadmin? }
+  
   # This will authorize the Company class with CanCan
   # The authorization is done using the AdminAbility class
   # BLACK MAGIC BELOW
@@ -26,7 +28,12 @@ ActiveAdmin.register Company do
     default_actions :if => proc{ can?(:manage, Company) }
   end
   
-  show :title => :name do    
+  show :title => :name do
+    if company.description?
+      panel "Company Description" do
+        div company.description   
+      end
+    end
     panel "Users" do
       table_for(company.user) do
         column("Email", :sortable => :id) {|user| link_to "#{user.email}", admin_user_path(user)}
@@ -35,8 +42,8 @@ ActiveAdmin.register Company do
     active_admin_comments
   end
   
-  sidebar "Company Details", :only=>:show do
-    attributes_table_for company, :name, :description, :created_at
-  end
+  #sidebar "Company Details", :only=>:show do
+  #  attributes_table_for company, :name, :description, :created_at
+  #end
   
 end

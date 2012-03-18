@@ -21,13 +21,59 @@ ActiveAdmin::Dashboards.build do
   #
      section "Recent Files" do
        ul do
-          ContractorFile.limit(10).collect do |cf|
-            li link_to "#{cf.csv_file_name}", cf.csv.url(:original, false)
-          end         
-  #       render 'recent_posts' # => this will render /app/views/admin/dashboard/_recent_posts.html.erb
+         if current_user.superadmin?
+           @contractorFileList = ContractorFile.limit(10).order("updated_at DESC").collect
+         else 
+           @contractorFileList = ContractorFile.where(:company_id=>current_user.company_id).limit(10).order("updated_at DESC").collect
+         end
+         table_for @contractorFileList do
+            column ("File Name") { |cf| cf.csv_file_name }
+            column :status, :sortable => :status do |cf|
+              if cf.status == FILE_STATUS[0]
+                div :class => "firstStatus leftAlign" do
+                  cf.status
+                end
+              elsif cf.status == FILE_STATUS[1]
+                div :class => "secondStatus leftAlign" do
+                  cf.status
+                end
+              else  
+                div :class => "thirdStatus leftAlign" do
+                  cf.status
+                end      
+              end
+            end
+            column("Download") {|cf| link_to "Download File", cf.csv.url(:original, false) }
+            column("Records Found") { |cf| cf.users_found }
+            column("Users Created") { |cf| cf.users_created }
+            column("Users Updated") { |cf| cf.users_updated }
+            column("Users Deleted") { |cf| cf.users_deleted }
+            column("Errors Found") { |cf| cf.users_errored }
+            column("Users Not Changed") { |cf| cf.users_not_changed }
+         end
        end
      end
-  
+     
+=begin
+       section "Background Jobs" do
+         now = Time.now.getgm
+         ul do
+           li do
+             jobs = Delayed::Job.where('failed_at is not null').count(:id)
+             link_to "#{jobs} failing jobs", admin_jobs_path(q: {failed_at_is_not_null: true}), style: 'color: red'
+           end
+           li do
+             jobs = Delayed::Job.where('run_at <= ?', now).count(:id)
+             link_to "#{jobs} late jobs", admin_jobs_path(q: {run_at_lte: now.to_s(:db)}), style: 'color: hsl(40, 100%, 40%)'
+           end
+           li do
+             jobs = Delayed::Job.where('run_at >= ?', now).count(:id)
+             link_to "#{jobs} scheduled jobs", admin_jobs_path(q: {run_at_gte: now.to_s(:db)}), style: 'color: green'
+           end
+         end
+       end
+=end
+
   # == Section Ordering
   # The dashboard sections are ordered by a given priority from top left to
   # bottom right. The default priority is 10. By giving a section numerically lower
