@@ -6,10 +6,8 @@ ActiveAdmin.register ContractorFile do
   FILE_STATUS = ["Preparing File for Processing", "File Ready for Import into Directories", "Processing Completed"]
   
   filter :csv_file_name
-  #filter :user, :as => :select, :collection => User.where(:company_id => current_user.company_id).map(&:email)
-  #filter :user
   filter :status, :as => :select, :collection => FILE_STATUS
-  #filter :company, :as => :string
+  filter :company, :collection => proc { current_user.get_self_companies.map(&:name) }
   filter :created_at
 
   controller do

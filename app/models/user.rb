@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  attr_accessible :id, :email, :password, :password_confirmation, :company_id, :role, :superadmin
+  attr_accessible :id, :email, :password, :password_confirmation, :company_id, :role, :superadmin, :remember_me
   
   belongs_to :company
   has_many   :contractor_files

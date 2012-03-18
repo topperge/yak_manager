@@ -13,7 +13,7 @@ ActiveAdmin.register ContractorFileRecord do
   filter :clid
   filter :email
   filter :message
-  filter :flag, :as => :select, :collection => ContractorFileRecord.group(:flag).map(&:flag)
+  filter :flag, :as => :select, :collection => ["Bad Data", "Existing User", "New User", "Updated User"]
   #filter :contractor_file, :as => :select, :collection => ContractorFile.group(:csv_file_name).map(&:csv_file_name)
   #filter :contractor_file, :as => :select, :collection => proc { ContractorFile.all(:conditions => { :company_id => f.template.controller.current_user.company_id}).flatten }
   filter :created_at
