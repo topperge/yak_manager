@@ -9,6 +9,8 @@ gem 'devise', '~>2.0.0'
 gem 'cancan'
 gem 'paperclip'
 gem 'delayed_job_active_record'
+#gem 'tiny_tds'
+#gem 'activerecord-sqlserver-adapter', '3.2.1'
 
 # Gems used only for assets and not required
 # in production environments by default.

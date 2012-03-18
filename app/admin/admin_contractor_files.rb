@@ -2,6 +2,8 @@ ActiveAdmin.register ContractorFile do
   scope_to :current_user, :association_method => :get_self_contractor_files
   
   menu :priority => 1
+
+  FILE_STATUS = ["Preparing File for Processing", "File Ready for Import into Directories", "Processing Completed"]
   
   filter :csv_file_name
   #filter :user, :as => :select, :collection => User.where(:company_id => current_user.company_id).map(&:email)
@@ -9,8 +11,6 @@ ActiveAdmin.register ContractorFile do
   filter :status, :as => :select, :collection => FILE_STATUS
   #filter :company, :as => :string
   filter :created_at
-    
-  FILE_STATUS = ["Preparing File for Processing", "File Ready for Import into Directories", "Processing Completed"]
 
   controller do
     actions :show, :index, :new, :create
