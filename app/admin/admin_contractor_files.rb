@@ -6,6 +6,7 @@ ActiveAdmin.register ContractorFile do
   FILE_STATUS = ["Preparing File for Processing", "File Ready for Import into Directories", "Processing Completed"]
   
   filter :csv_file_name
+  filter :user, :collection => proc { current_user.get_self_users.map(&:email) }
   filter :status, :as => :select, :collection => FILE_STATUS
   filter :company, :collection => proc { current_user.get_self_companies.map(&:name) }
   filter :created_at
@@ -23,13 +24,17 @@ ActiveAdmin.register ContractorFile do
         @contractorfile.company_id = current_user.company_id
       end
       @contractorfile.status = FILE_STATUS[0]
-      if @contractorfile.save!
-        flash[:notice] = "CSV Uploaded Successfully and Staged for Processing!"
-        ContractorFile.delay.process_csv_file(@contractorfile.csv.path, @contractorfile.company_id, @contractorfile.id)
-        redirect_to :action => :show, :id => @contractorfile.id
-      else
-        render active_admin_template((@contractorfile.new_record? ? 'new' : 'edit') + '.html.arb')
-      end
+      begin
+        if @contractorfile.save!
+          flash[:notice] = "CSV Uploaded Successfully and Staged for Processing!"
+          ContractorFile.delay.process_csv_file(@contractorfile.csv.path, @contractorfile.company_id, @contractorfile.id)
+          redirect_to :action => :show, :id => @contractorfile.id
+        else
+          render active_admin_template((@contractorfile.new_record? ? 'new' : 'edit') + '.html.arb')
+        end
+        rescue ActiveRecord::RecordInvalid
+        render active_admin_template((@contractorfile.new_record? ? 'new' : 'edit') + '.html.arb')      
+      end  
     end
   end  
   
@@ -37,7 +42,9 @@ ActiveAdmin.register ContractorFile do
 
   index do
     column("Uploaded File Name") {|contractorfile| link_to "#{contractorfile.csv_file_name}", contractorfile.csv.url(:original, false) }
-    column :company
+    if current_user.superadmin == true
+      column :company
+    end
     column :user
     column :status, :sortable => :status do |contractorfile|
       if contractorfile.status == FILE_STATUS[0]
@@ -54,7 +61,7 @@ ActiveAdmin.register ContractorFile do
         end      
       end
     end
-    column("Uploaded At") {|contractorfile| "#{contractorfile.created_at}"}
+    column "Uploaded At", :created_at
     column("Records Uploaded") {|contractorfile| "#{contractorfile.contractor_file_records.count}" }
     column("Records Found") { |contractorfile| "#{contractorfile.users_found}" }
     column("Users Created") { |contractorfile| "#{contractorfile.users_created}" }

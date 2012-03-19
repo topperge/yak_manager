@@ -27,6 +27,9 @@ ActiveAdmin::Dashboards.build do
            @contractorFileList = ContractorFile.where(:company_id=>current_user.company_id).limit(10).order("updated_at DESC").collect
          end
          table_for @contractorFileList do
+            if current_user.superadmin?
+              column :company
+            end
             column ("File Name") { |cf| cf.csv_file_name }
             column :status, :sortable => :status do |cf|
               if cf.status == FILE_STATUS[0]

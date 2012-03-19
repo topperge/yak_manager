@@ -12,7 +12,7 @@ describe AdminAbility do
 
   it 'lets a superuser manage all companies' do
     bookface = Company.create(:name => 'Bookface' )
-    jesus = User.create(:company_id => nil, :password => 'passpass', :email=>'jesus@heaven.com', :role => 'superuser')
+    jesus = User.create(:company_id => nil, :password => 'passpass', :email=>'jesus@heaven.com', :superadmin => 'true', :role => 'superuser')
     jesus_rights = AdminAbility.new(jesus)
     jesus_rights.should be_able_to(:destroy, bookface)    
   end

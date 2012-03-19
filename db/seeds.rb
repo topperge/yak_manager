@@ -13,4 +13,4 @@ google = Company.create!(name: 'Google', description: 'Gmail peeps should be abl
 private_corp = Company.create!(name: 'Private Corp', description: 'Only superusers should be able to edit me.')
 
 joe = User.create(email: 'joe@gmail.com', company_id: google.id, password: 'password', role: 'user')
-bob = User.create(email: 'bob@privatecorp.com', company_id: nil, password: 'password', role: 'superuser')
+bob = User.create(email: 'bob@privatecorp.com', company_id: nil, password: 'password', superadmin: 'true', role: 'superuser')

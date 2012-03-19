@@ -42,8 +42,4 @@ ActiveAdmin.register Company do
     active_admin_comments
   end
   
-  #sidebar "Company Details", :only=>:show do
-  #  attributes_table_for company, :name, :description, :created_at
-  #end
-  
 end

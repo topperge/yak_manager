@@ -13,6 +13,7 @@ ActiveAdmin.register Contractor do
 
   filter :clid
   filter :email
+  filter :company, :collection => proc { current_user.get_self_companies }
   filter :deleted, :as=>:select
   filter :created_at
   filter :updated_at
