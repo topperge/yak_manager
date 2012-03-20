@@ -6,8 +6,10 @@ class ContractorFile < ActiveRecord::Base
   validates_attachment_presence :csv
   validates_attachment_content_type :csv, :content_type => ['text/csv','text/comma-separated-values','text/csv','application/csv','text/plain']
   validates_presence_of :company_id
-  attr_accessible :csv, :csv_file_name, :csv_content_type, :csv_file_size, :csv_updated_at, :users_created, :users_deleted, :users_updated, :users_errored, :status, :user_id, :company_id
+  #validates :csv, :contractor_file => true
   
+  attr_accessible :csv, :csv_file_name, :csv_content_type, :csv_file_size, :csv_updated_at, :users_created, :users_deleted, :users_updated, :users_errored, :status, :user_id, :company_id
+    
   def display_name
     self.csv_file_name
   end
@@ -34,7 +36,7 @@ class ContractorFile < ActiveRecord::Base
         users_errored += 1
         message = 'More than two values provided in line, must only contain two values'
         flag    = 'Bad Data'
-      elsif values[1].end_with?('ctr.uberether.com')
+      elsif (values[1].end_with?('.ctr.uberether.com') && values[1].include?('@') )
         @contractor = Contractor.where(:clid => values[0], :company_id => iCompany_id.to_i).all
         if (@contractor.count == 1)
           @contractor = @contractor.first
@@ -72,7 +74,7 @@ class ContractorFile < ActiveRecord::Base
       #Bad email address found
       else
         users_errored += 1
-        message = 'Invalid email address provided, must end in .ctr.uberether.com'
+        message = 'Invalid email address provided, must end in .ctr.uberether.com and contain and @ symbol'
         flag    = 'Bad Data'
       end
       ContractorFileRecord.create(:clid => values[0].downcase, :email => values[1].downcase, :flag => flag, :message => message, :contractor_file_id => iContractor_file_id.to_i, :company_id => iCompany_id.to_i, :record_id => users_found)
